@@ -1,0 +1,74 @@
+
+> weekly-report-api@1.0.0 lint
+> eslint src/**/*.ts
+
+
+C:\Users\sarfa\Downloads\Assigment\project\backend\src\__tests__\auth.test.ts
+    5:10  error  'UserRole' is defined but never used       @typescript-eslint/no-unused-vars
+  119:13  error  'user' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\sarfa\Downloads\Assigment\project\backend\src\__tests__\rbac.test.ts
+  33:7  error  'teamMember2Id' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\sarfa\Downloads\Assigment\project\backend\src\config\database.ts
+  15:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  24:34  error  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+
+C:\Users\sarfa\Downloads\Assigment\project\backend\src\middleware\auth.ts
+  41:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\sarfa\Downloads\Assigment\project\backend\src\middleware\errorHandler.ts
+   8:3   error  '_next' is defined but never used         @typescript-eslint/no-unused-vars
+  28:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  28:58  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  43:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  44:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  64:3   error  '_next' is defined but never used         @typescript-eslint/no-unused-vars
+
+C:\Users\sarfa\Downloads\Assigment\project\backend\src\middleware\validation.ts
+  18:45  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\sarfa\Downloads\Assigment\project\backend\src\models\Project.ts
+  24:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\sarfa\Downloads\Assigment\project\backend\src\models\Report.ts
+  144:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\sarfa\Downloads\Assigment\project\backend\src\models\ReportVersion.ts
+  27:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\sarfa\Downloads\Assigment\project\backend\src\models\ReviewComment.ts
+  33:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\sarfa\Downloads\Assigment\project\backend\src\models\User.ts
+  43:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  62:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\sarfa\Downloads\Assigment\project\backend\src\services\ai.service.ts
+  30:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  32:18  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  36:18  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  54:64  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  96:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\sarfa\Downloads\Assigment\project\backend\src\services\report.service.ts
+   25:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   57:64  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  216:17  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\sarfa\Downloads\Assigment\project\backend\src\types\index.ts
+  216:34  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  220:12  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  223:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\sarfa\Downloads\Assigment\project\backend\src\utils\errors.ts
+   3:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   5:67  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  34:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\sarfa\Downloads\Assigment\project\backend\src\utils\jwt.ts
+  16:10  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 34 problems (34 errors, 0 warnings)
+
+\n
