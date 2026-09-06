@@ -21,6 +21,7 @@ export function AdminUsersPage() {
 
   const handleSave = async () => {
     if (!name.trim() || !email.trim()) return;
+    if (!editing && !manualPassword.trim()) return;
     try {
       if (editing) {
         await updateUser(editing.id, { name, email, phoneNumber: phone, role: role as 'team_member' | 'manager', department });
@@ -127,13 +128,13 @@ export function AdminUsersPage() {
               </div>
             ) : (
               <form className="space-y-4" autoComplete="off">
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">Name</label><Input value={name} onChange={setName} placeholder="Full name" autoComplete="off" /></div>
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">Email</label><Input value={email} onChange={setEmail} placeholder="email@company.com" type="email" autoComplete="off" /></div>
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label><Input value={phone} onChange={setPhone} placeholder="+1234567890" type="tel" autoComplete="off" /></div>
+                <div><label className="block text-sm font-medium text-gray-700 mb-1">Name <span className="text-red-500">*</span></label><Input value={name} onChange={setName} placeholder="Full name" autoComplete="off" /></div>
+                <div><label className="block text-sm font-medium text-gray-700 mb-1">Email <span className="text-red-500">*</span></label><Input value={email} onChange={setEmail} placeholder="email@company.com" type="email" autoComplete="off" /></div>
+                <div><label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label><Input value={phone} onChange={setPhone} placeholder="+94 7X XXX XXXX" type="tel" autoComplete="off" /></div>
                 {!editing && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Custom Password (Optional)</label>
-                    <Input value={manualPassword} onChange={setManualPassword} placeholder="Leave blank to auto-generate" type="password" autoComplete="new-password" />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Password <span className="text-red-500">*</span></label>
+                    <Input value={manualPassword} onChange={setManualPassword} placeholder="Enter password" type="password" autoComplete="new-password" />
                   </div>
                 )}
                 <div>
@@ -146,7 +147,7 @@ export function AdminUsersPage() {
                 </div>
                 <div className="flex justify-end gap-3 pt-2">
                   <Button variant="secondary" onClick={() => setShowForm(false)}>Cancel</Button>
-                  <Button onClick={handleSave} disabled={!name.trim() || !email.trim()}>{editing ? 'Update' : 'Create'}</Button>
+                  <Button onClick={handleSave} disabled={!name.trim() || !email.trim() || (!editing && !manualPassword.trim())}>{editing ? 'Update' : 'Create'}</Button>
                 </div>
               </form>
             )}

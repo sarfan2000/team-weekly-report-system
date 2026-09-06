@@ -4,7 +4,12 @@ import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, Cart
 import { useTeamReports } from '@/lib/hooks';
 import { Card, Spinner } from '@/components/ui';
 
-const COLORS = ['#2563eb', '#16a34a', '#ea580c', '#9333ea', '#0891b2'];
+const COMPLIANCE_COLORS: Record<string, string> = {
+  'Approved': '#16a34a',
+  'Pending': '#2563eb',
+  'Needs Correction': '#ea580c',
+  'Draft': '#94a3b8',
+};
 
 export function ManagerAnalyticsPage() {
   const { reports, loading } = useTeamReports();
@@ -24,16 +29,18 @@ export function ManagerAnalyticsPage() {
   }, [reports]);
 
   const complianceData = useMemo(() => {
-    const counts = { Submitted: 0, Pending: 0, Late: 0 };
+    const counts = { Approved: 0, Pending: 0, Late: 0, Draft: 0 };
     reports.forEach((r) => {
-      if (r.status === 'approved' || r.status === 'submitted') counts.Submitted++;
-      else if (r.status === 'draft') counts.Pending++;
+      if (r.status === 'approved') counts.Approved++;
+      else if (r.status === 'submitted') counts.Pending++;
       else if (r.status === 'needs_correction') counts.Late++;
+      else if (r.status === 'draft') counts.Draft++;
     });
     return [
-      { name: 'Submitted', value: counts.Submitted },
+      { name: 'Approved', value: counts.Approved },
       { name: 'Pending', value: counts.Pending },
       { name: 'Needs Correction', value: counts.Late },
+      { name: 'Draft', value: counts.Draft },
     ];
   }, [reports]);
 
@@ -93,8 +100,8 @@ export function ManagerAnalyticsPage() {
           <h2 className="font-semibold text-gray-900 mb-4">Submission Compliance</h2>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
-              <Pie data={complianceData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label={(e: any) => `${e.name}: ${e.value}`}>
-                {complianceData.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+              <Pie data={complianceData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label={(e: any) => e.value > 0 ? `${e.name}: ${e.value}` : ''}>
+                {complianceData.map((entry, i) => <Cell key={i} fill={COMPLIANCE_COLORS[entry.name]} />)}
               </Pie>
               <Tooltip />
               <Legend />
