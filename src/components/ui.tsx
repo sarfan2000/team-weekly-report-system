@@ -49,29 +49,29 @@ export function Button({ children, onClick, variant = 'primary', size = 'md', di
   );
 }
 
-export function Input({ value, onChange, placeholder, type = 'text', disabled, className = '', autoComplete }: {
-  value: string | number; onChange?: (v: string) => void; placeholder?: string; type?: string; disabled?: boolean; className?: string; autoComplete?: string;
+export function Input({ value, onChange, placeholder, type = 'text', disabled, required, className = '', autoComplete }: {
+  value: string | number; onChange?: (v: string) => void; placeholder?: string; type?: string; disabled?: boolean; required?: boolean; className?: string; autoComplete?: string;
 }) {
   return (
-    <input type={type} value={value} onChange={onChange ? (e) => onChange(e.target.value) : undefined} placeholder={placeholder} disabled={disabled} autoComplete={autoComplete}
+    <input type={type} value={value} onChange={onChange ? (e) => onChange(e.target.value) : undefined} placeholder={placeholder} disabled={disabled} required={required} autoComplete={autoComplete}
       className={`w-full px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500 ${className}`} />
   );
 }
 
-export function Textarea({ value, onChange, placeholder, rows = 3, disabled }: {
-  value: string; onChange?: (v: string) => void; placeholder?: string; rows?: number; disabled?: boolean;
+export function Textarea({ value, onChange, placeholder, rows = 3, disabled, required }: {
+  value: string; onChange?: (v: string) => void; placeholder?: string; rows?: number; disabled?: boolean; required?: boolean;
 }) {
   return (
-    <textarea value={value} onChange={onChange ? (e) => onChange(e.target.value) : undefined} placeholder={placeholder} rows={rows} disabled={disabled}
+    <textarea value={value} onChange={onChange ? (e) => onChange(e.target.value) : undefined} placeholder={placeholder} rows={rows} disabled={disabled} required={required}
       className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500 resize-y" />
   );
 }
 
-export function Select({ value, onChange, options, disabled, className = '' }: {
-  value: string; onChange?: (v: string) => void; options: { value: string; label: string }[]; disabled?: boolean; className?: string;
+export function Select({ value, onChange, options, disabled, required, className = '' }: {
+  value: string; onChange?: (v: string) => void; options: { value: string; label: string }[]; disabled?: boolean; required?: boolean; className?: string;
 }) {
   return (
-    <select value={value} onChange={onChange ? (e) => onChange(e.target.value) : undefined} disabled={disabled}
+    <select value={value} onChange={onChange ? (e) => onChange(e.target.value) : undefined} disabled={disabled} required={required}
       className={`w-full px-3 py-2 rounded-lg border border-gray-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500 ${className}`}>
       {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
     </select>
@@ -102,4 +102,33 @@ export function Avatar({ name, size = 'md' }: { name: string; size?: 'sm' | 'md'
   const colors = ['bg-blue-500', 'bg-emerald-500', 'bg-orange-500', 'bg-purple-500', 'bg-pink-500', 'bg-teal-500'];
   const colorIndex = name.charCodeAt(0) % colors.length;
   return <div className={`${sizes[size]} ${colors[colorIndex]} rounded-full flex items-center justify-center text-white font-semibold shrink-0`}>{initials}</div>;
+}
+
+export function Pagination({ currentPage, totalPages, onPageChange, totalItems, itemsPerPage }: { currentPage: number, totalPages: number, onPageChange: (page: number) => void, totalItems: number, itemsPerPage: number }) {
+  if (totalPages <= 1) return null;
+  const startItem = (currentPage - 1) * itemsPerPage + 1;
+  const endItem = Math.min(currentPage * itemsPerPage, totalItems);
+
+  return (
+    <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+      <div className="flex flex-1 justify-between sm:hidden">
+        <Button variant="secondary" onClick={() => onPageChange(currentPage - 1)} disabled={currentPage === 1}>Previous</Button>
+        <Button variant="secondary" onClick={() => onPageChange(currentPage + 1)} disabled={currentPage === totalPages}>Next</Button>
+      </div>
+      <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+        <div>
+          <p className="text-sm text-gray-700">
+            Showing <span className="font-medium">{startItem}</span> to <span className="font-medium">{endItem}</span> of <span className="font-medium">{totalItems}</span> results
+          </p>
+        </div>
+        <div className="flex gap-2 items-center">
+          <Button variant="secondary" size="sm" onClick={() => onPageChange(currentPage - 1)} disabled={currentPage === 1}>Previous</Button>
+          <div className="px-3 py-1 text-sm font-medium text-gray-700 rounded-lg">
+            Page {currentPage} of {totalPages}
+          </div>
+          <Button variant="secondary" size="sm" onClick={() => onPageChange(currentPage + 1)} disabled={currentPage === totalPages}>Next</Button>
+        </div>
+      </div>
+    </div>
+  );
 }

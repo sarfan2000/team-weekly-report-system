@@ -118,7 +118,7 @@ export function ReportEditorPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <form className="max-w-4xl mx-auto space-y-6" onSubmit={(e) => { e.preventDefault(); submitReport(); }}>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="sm" onClick={() => navigate(-1)}><ArrowLeft className="w-4 h-4" /> Back</Button>
@@ -143,16 +143,16 @@ export function ReportEditorPage() {
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Week & Project</h2>
         <div className="grid sm:grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Week Start</label>
-            <Input type="date" value={weekStart} onChange={setWeekStart} />
+            <label className="block text-sm font-medium text-gray-700 mb-1">Week Start <span className="text-red-500">*</span></label>
+            <Input type="date" value={weekStart} onChange={setWeekStart} required />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Week End</label>
-            <Input type="date" value={weekEnd} onChange={setWeekEnd} />
+            <label className="block text-sm font-medium text-gray-700 mb-1">Week End <span className="text-red-500">*</span></label>
+            <Input type="date" value={weekEnd} onChange={setWeekEnd} required />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Project</label>
-            <Select value={projectId} onChange={setProjectId}
+            <label className="block text-sm font-medium text-gray-700 mb-1">Project <span className="text-red-500">*</span></label>
+            <Select value={projectId} onChange={setProjectId} required
               options={[{ value: '', label: 'Select project...' }, ...activeProjects.map((p) => ({ value: p.id, label: p.name }))]} />
           </div>
         </div>
@@ -168,8 +168,8 @@ export function ReportEditorPage() {
           {tasks.map((task, i) => (
             <div key={i} className="border border-gray-200 rounded-lg p-4 space-y-3">
               <div className="flex items-start gap-3">
-                <Input value={task.name} placeholder="Task name" className="flex-1" onChange={(v) => updateTask(i, 'name', v)} />
-                <button onClick={() => setTasks(tasks.filter((_, idx) => idx !== i))} className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                <Input value={task.name} placeholder="Task name" className="flex-1" onChange={(v) => updateTask(i, 'name', v)} required />
+                <button type="button" onClick={() => setTasks(tasks.filter((_, idx) => idx !== i))} className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
@@ -217,7 +217,7 @@ export function ReportEditorPage() {
             <div key={i} className="flex items-center gap-3">
               <input type="checkbox" checked={t.done} onChange={(e) => setNextWeekTasks(nextWeekTasks.map((x, idx) => idx === i ? { ...x, done: e.target.checked } : x))} className="w-4 h-4 rounded text-blue-600" />
               <Input value={t.text} placeholder="Task planned for next week" className="flex-1" onChange={(v) => setNextWeekTasks(nextWeekTasks.map((x, idx) => idx === i ? { ...x, text: v } : x))} />
-              <button onClick={() => setNextWeekTasks(nextWeekTasks.filter((_, idx) => idx !== i))} className="p-2 text-gray-400 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
+              <button type="button" onClick={() => setNextWeekTasks(nextWeekTasks.filter((_, idx) => idx !== i))} className="p-2 text-gray-400 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
             </div>
           ))}
           {nextWeekTasks.length === 0 && <p className="text-sm text-gray-400 py-2">No tasks planned yet.</p>}
@@ -235,7 +235,7 @@ export function ReportEditorPage() {
             <div key={i} className="flex items-center gap-3">
               <input type="radio" name="key_issue" checked={b.is_key_issue} onChange={() => setBlockers(blockers.map((x, idx) => ({ ...x, is_key_issue: idx === i })))} className="w-4 h-4 text-amber-600" />
               <Input value={b.text} placeholder="Blocker or challenge" className="flex-1" onChange={(v) => setBlockers(blockers.map((x, idx) => idx === i ? { ...x, text: v } : x))} />
-              <button onClick={() => setBlockers(blockers.filter((_, idx) => idx !== i))} className="p-2 text-gray-400 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
+              <button type="button" onClick={() => setBlockers(blockers.filter((_, idx) => idx !== i))} className="p-2 text-gray-400 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
             </div>
           ))}
           {blockers.length === 0 && <p className="text-sm text-gray-400 py-2">No blockers reported.</p>}
@@ -254,7 +254,7 @@ export function ReportEditorPage() {
             <div key={i} className="flex items-center gap-3">
               <input type="radio" name="key_achievement" checked={a.is_key_achievement} onChange={() => setAchievements(achievements.map((x, idx) => ({ ...x, is_key_achievement: idx === i })))} className="w-4 h-4 text-emerald-600" />
               <Input value={a.text} placeholder="Achievement or highlight" className="flex-1" onChange={(v) => setAchievements(achievements.map((x, idx) => idx === i ? { ...x, text: v } : x))} />
-              <button onClick={() => setAchievements(achievements.filter((_, idx) => idx !== i))} className="p-2 text-gray-400 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
+              <button type="button" onClick={() => setAchievements(achievements.filter((_, idx) => idx !== i))} className="p-2 text-gray-400 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
             </div>
           ))}
           {achievements.length === 0 && <p className="text-sm text-gray-400 py-2">No achievements recorded.</p>}
@@ -294,7 +294,7 @@ export function ReportEditorPage() {
                 <LinkIcon className="w-4 h-4 text-gray-400 shrink-0" />
                 <Input value={l.label} placeholder="Label" className="flex-1" onChange={(v) => setLinks(links.map((x, idx) => idx === i ? { ...x, label: v } : x))} />
                 <Input value={l.url} placeholder="URL" className="flex-1" onChange={(v) => setLinks(links.map((x, idx) => idx === i ? { ...x, url: v } : x))} />
-                <button onClick={() => setLinks(links.filter((_, idx) => idx !== i))} className="p-2 text-gray-400 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
+                <button type="button" onClick={() => setLinks(links.filter((_, idx) => idx !== i))} className="p-2 text-gray-400 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
               </div>
             ))}
             {links.length === 0 && <p className="text-sm text-gray-400 py-2">No links added.</p>}
@@ -306,11 +306,11 @@ export function ReportEditorPage() {
       <div className="flex items-center justify-end gap-3 pb-6">
         <Button variant="secondary" onClick={() => navigate(-1)}>Cancel</Button>
         <Button variant="secondary" onClick={saveDraft} disabled={saving}><Save className="w-4 h-4" /> Save as Draft</Button>
-        <Button variant="primary" onClick={submitReport} disabled={saving}>
+        <Button variant="primary" type="submit" disabled={saving}>
           {isNeedsCorrection ? <><Send className="w-4 h-4" /> Resubmit</> : <><Send className="w-4 h-4" /> Submit for Review</>}
         </Button>
       </div>
-    </div>
+    </form>
   );
 
   function updateTask(index: number, field: keyof Task, value: string | number) {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Plus, Trash2, UserCog, X, Shield, User } from 'lucide-react';
 import { useUsers, createUser, updateUser, deleteUser } from '@/lib/hooks';
-import { Button, Card, Input, Select, Avatar, Spinner, EmptyState } from '@/components/ui';
+import { Button, Card, Input, Select, Avatar, Spinner, EmptyState, Pagination } from '@/components/ui';
 import type { User as UserType } from '@/lib/types';
 
 export function AdminUsersPage() {
@@ -15,6 +15,13 @@ export function AdminUsersPage() {
   const [role, setRole] = useState('team_member');
   const [department, setDepartment] = useState('Engineering');
   const [createdUserAuth, setCreatedUserAuth] = useState<{ email: string, password: string } | null>(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedUsers = users.slice(startIndex, startIndex + itemsPerPage);
+  const totalPages = Math.ceil(users.length / itemsPerPage);
 
   const openNew = () => { setEditing(null); setName(''); setEmail(''); setPhone(''); setManualPassword(''); setRole('team_member'); setDepartment('Engineering'); setShowForm(true); setCreatedUserAuth(null); };
   const openEdit = (u: UserType) => { setEditing(u); setName(u.name); setEmail(u.email); setPhone(u.phoneNumber || ''); setRole(u.role); setDepartment(u.department || 'Engineering'); setShowForm(true); setCreatedUserAuth(null); };
@@ -74,7 +81,7 @@ export function AdminUsersPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
-                {users.map((u) => (
+                {paginatedUsers.map((u) => (
                   <tr key={u.id} className="hover:bg-gray-50">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
@@ -102,6 +109,13 @@ export function AdminUsersPage() {
                 ))}
               </tbody>
             </table>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              totalItems={users.length}
+              itemsPerPage={itemsPerPage}
+            />
           </div>
         )}
       </Card>

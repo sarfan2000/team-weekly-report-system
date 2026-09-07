@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 import { FileText, Clock, AlertTriangle, CheckCircle, Users, Zap, Trophy, TableIcon } from 'lucide-react';
 import { useTeamReports, useUsers, useProjects } from '@/lib/hooks';
-import { Card, StatusBadge, ProjectTag, Avatar, Spinner, EmptyState, Select } from '@/components/ui';
+import { Card, StatusBadge, ProjectTag, Avatar, Spinner, EmptyState, Select, Pagination } from '@/components/ui';
 import type { ReportStatus, ReportWithRelations } from '@/lib/types';
 
 type Tab = 'all' | 'blockers' | 'achievements';
@@ -17,6 +17,8 @@ export function ManagerDashboardPage() {
   const [statusFilter, setStatusFilter] = useState('');
   const [projectFilter, setProjectFilter] = useState('');
   const [tab, setTab] = useState<Tab>('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const weekOptions = useMemo(() => {
     const weeks = new Map<string, string>();
@@ -24,13 +26,27 @@ export function ManagerDashboardPage() {
     return Array.from(weeks.entries()).sort((a, b) => b[0].localeCompare(a[0]));
   }, [reports]);
 
-  const filtered = reports.filter((r) => {
-    if (memberFilter && r.user_id !== memberFilter) return false;
-    if (weekFilter && r.week_start !== weekFilter) return false;
-    if (statusFilter && r.status !== statusFilter) return false;
-    if (projectFilter && r.project_id !== projectFilter) return false;
-    return true;
-  });
+  const filtered = useMemo(() => {
+    return reports.filter((r) => {
+      if (memberFilter && r.user_id !== memberFilter) return false;
+      if (weekFilter && r.week_start !== weekFilter) return false;
+      if (statusFilter && r.status !== statusFilter) return false;
+      if (projectFilter && r.project_id !== projectFilter) return false;
+      return true;
+    });
+  }, [reports, memberFilter, weekFilter, statusFilter, projectFilter]);
+
+  const paginatedReports = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filtered.slice(startIndex, startIndex + itemsPerPage);
+  }, [filtered, currentPage, itemsPerPage]);
+
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+
+  // Reset to first page on filter change
+  useMemo(() => {
+    setCurrentPage(1);
+  }, [memberFilter, weekFilter, statusFilter, projectFilter]);
 
   const stats = useMemo(() => ({
     total: reports.length,
@@ -123,11 +139,18 @@ export function ManagerDashboardPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50">
-                    {filtered.map((r) => (
+                    {paginatedReports.map((r) => (
                       <ReportRow key={r.id} report={r} />
                     ))}
                   </tbody>
                 </table>
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                  totalItems={filtered.length}
+                  itemsPerPage={itemsPerPage}
+                />
               </div>
             )}
           </Card>
