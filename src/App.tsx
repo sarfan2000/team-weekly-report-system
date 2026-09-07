@@ -53,6 +53,7 @@ function AppRoutes() {
 
   return (
     <Routes>
+      <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/login" element={currentUser ? <Navigate to={currentUser.role === 'manager' ? '/manager/dashboard' : '/reports/history'} replace /> : <LoginPage />} />
       <Route path="/*" element={<ProtectedRoutes />} />
     </Routes>

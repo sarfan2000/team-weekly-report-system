@@ -138,6 +138,7 @@ Frontend runs on: **http://localhost:5173**
 ## 🧪 Testing
 
 ```bash
+cd project
 cd backend
 npm test                 # Run all tests
 npm run test:watch      # Watch mode
@@ -190,20 +191,20 @@ See [API_DOCUMENTATION.md](./API_DOCUMENTATION.md) for complete details.
 ## 🔒 RBAC Rules
 
 ### Team Member:
-- ✅ Manage their own reports
-- ❌ Cannot view other team member reports
-- ❌ Cannot access manager routes
+- Manage their own reports
+- Cannot view other team member reports
+- Cannot access manager routes
 
 ### Manager:
-- ✅ View all team reports
-- ✅ Review and approve reports
-- ✅ Access analytics
-- ✅ Manage projects
+- View all team reports
+- Review and approve reports
+- Access analytics
+- Manage projects
 
 ### Admin:
-- ✅ All manager permissions
-- ✅ Manage user roles
-- ✅ Delete projects
+- All manager permissions
+- Manage user roles
+- Delete projects
 
 ## 🛡️ Security Features
 
@@ -230,12 +231,13 @@ npm run lint      # Lint code
 
 ### Frontend Scripts:
 ```bash
+cd project
 npm run dev       # Development server
 npm run build     # Production build
 npm run preview   # Preview production build
 ```
 
-## 📊 Database Schema
+##  Database Schema
 
 ### Collections:
 - **users** - User accounts and roles
@@ -261,7 +263,7 @@ This is an explicit example of the internal raw MongoDB schema used for Manager 
 }
 ```
 
-## 🧠 AI Chat Assistant Documentation
+## AI Chat Assistant Documentation
 As an advanced optional enhancement, we have successfully integrated an AI-powered conversational assistant to help managers oversee their teams. The AI is designed to synthesize qualitative and quantitative data across multiple reports, extracting the highest-value insights.
 
 **Approach & Architecture**:
@@ -281,18 +283,18 @@ As with any LLM integration processing internal employment data, strict PII prot
 2. **RBAC Isolation:** The `POST /ai/chat` endpoint is shielded by strict Role-Based Access Control JWT middleware. Team members physically cannot hit the AI endpoint.
 3. **Stateless Transmission:** We are transmitting data to the Gemini API securely over HTTPS. The LLM interaction acts completely statelessly, meaning no sensitive corporate IP is being cached long-term inside our backend.
 
-## 🤝 Contributing
+## Contributing
 
 1. Follow TypeScript best practices
 2. Write tests for new features
 3. Update documentation
 4. Run linter before committing
 
-## 📝 License
+## License
 
 MIT License
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### MongoDB Connection Error
 - Ensure MongoDB is running
@@ -312,14 +314,14 @@ MIT License
 - Check JWT_SECRET is set
 - Verify token is not expired
 
-## 📞 Support
+## Support
 
 For issues and questions:
 1. Check documentation
 2. Review test files for examples
 3. Check API responses for error messages
 
-## 🎓 Learning Resources
+## Learning Resources
 
 - [Express.js Documentation](https://expressjs.com/)
 - [MongoDB Documentation](https://docs.mongodb.com/)
