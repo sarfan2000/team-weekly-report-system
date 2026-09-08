@@ -17,7 +17,7 @@ export const getMyReports = async (
 ) => {
   const {
     page = 1,
-    limit = 100,
+    limit = 10,
     status,
     weekStartDate,
   } = query;
@@ -206,7 +206,7 @@ export const deleteReport = async (reportId: string) => {
 export const getTeamReports = async (query: ReportFilterQuery) => {
   const {
     page = 1,
-    limit = 100,
+    limit = 10,
     userId,
     projectId,
     status,

@@ -38,7 +38,7 @@ We successfully integrated several "good to have" and advanced architectural req
 - **RBAC Security Filtering:** Endpoints strictly distinguish managers from team members, utilizing robust HTTP JSON Web Token implementations.
 - **Form UI/UX Defect Mitigations:** Successfully bypassed and re-routed problematic browser logic (e.g. Chrome's invasive Auto-fill logic) to enforce strict manager usability.
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 ### Backend:
 - **Runtime:** Node.js 18+
@@ -110,6 +110,7 @@ npm install
 copy .env.example .env
 # Edit .env with your MongoDB URI (e.g. mongodb://localhost:27017/weekly-reports for MongoDB Compass)
 
+
 # Seed database with demo data
 npm run seed
 
@@ -135,7 +136,7 @@ npm run dev
 
 Frontend runs on: **http://localhost:5173**
 
-## 🧪 Testing
+##  Testing
 
 ```bash
 cd project
@@ -144,7 +145,7 @@ npm test                 # Run all tests
 npm run test:watch      # Watch mode
 ```
 
-## 📚 Documentation
+##  Documentation
 
 - **All technical documentation, security protocols, API notes, and deployment architectures are organically compiled directly within this single README source of truth.**
 
@@ -156,7 +157,7 @@ npm run test:watch      # Watch mode
 
 *Note on New Users: Managers can dynamically generate new Team Members from the "Users" admin dashboard. Generating a new user will instantly spawn an auto-generated (or custom) password that the Manager can copy and email directly to the team member so they can log in to their personal dashboard.*
 
-## 📖 API Endpoints
+##  API Endpoints
 
 ### Authentication:
 - `POST /api/auth/register` - Create account
@@ -188,7 +189,7 @@ npm run test:watch      # Watch mode
 
 See [API_DOCUMENTATION.md](./API_DOCUMENTATION.md) for complete details.
 
-## 🔒 RBAC Rules
+##  RBAC Rules
 
 ### Team Member:
 - Manage their own reports
@@ -206,7 +207,7 @@ See [API_DOCUMENTATION.md](./API_DOCUMENTATION.md) for complete details.
 - Manage user roles
 - Delete projects
 
-## 🛡️ Security Features
+##  Security Features
 
 - JWT-based authentication
 - Password hashing with bcrypt
