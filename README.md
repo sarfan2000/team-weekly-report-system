@@ -101,14 +101,41 @@ project/
 
 ```bash
 # Navigate to backend
+
 cd backend
 
 # Install dependencies
 npm install
 
+
+
 # Configure environment
 copy .env.example .env
 # Edit .env with your MongoDB URI (e.g. mongodb://localhost:27017/weekly-reports for MongoDB Compass)
+
+# Server Configuration
+NODE_ENV=development
+PORT=5000
+
+# MongoDB Configuration
+
+MONGODB_URI=mongodb://localhost:27017/weekly-reports
+
+# JWT Configuration
+JWT_SECRET=your jwt_secret_ky
+JWT_EXPIRES_IN=7d
+
+# OpenAI Configuration (for AI Assistant)
+OPENAI_API_KEY=your_openai_key_gemini_2,5
+
+# CORS Configuration
+CORS_ORIGIN=http://localhost:5173
+
+# Rate Limiting
+RATE_LIMIT_WINDOW_MS=1000
+RATE_LIMIT_MAX_REQUESTS=100
+
+
 
 
 # Seed database with demo data
@@ -139,7 +166,6 @@ Frontend runs on: **http://localhost:5173**
 ##  Testing
 
 ```bash
-cd project
 cd backend
 npm test                 # Run all tests
 npm run test:watch      # Watch mode
@@ -149,7 +175,7 @@ npm run test:watch      # Watch mode
 
 - **All technical documentation, security protocols, API notes, and deployment architectures are organically compiled directly within this single README source of truth.**
 
-## 🔐 Test Accounts
+## Test Accounts
 
 **Primary Testing Manager:**
 - Email: `sarfan@gmail.com`
@@ -232,7 +258,6 @@ npm run lint      # Lint code
 
 ### Frontend Scripts:
 ```bash
-cd project
 npm run dev       # Development server
 npm run build     # Production build
 npm run preview   # Preview production build
